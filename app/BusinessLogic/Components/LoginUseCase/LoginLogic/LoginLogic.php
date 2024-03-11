@@ -1,38 +1,39 @@
 <?php
+
 namespace App\BusinessLogic\Components\LoginUseCase\LoginLogic;
 
-use App\FactoryModel\FactoryModel;
-use App\Repository\ReadRepository;
-use App\BusinessLogic\Components\LoginUseCase\LoginInput\InputLoginLogic;
-use App\BusinessLogic\Components\LoginUseCase\LoginOutput\UserLoginOutput;
+use App\Repository\UserTokenRepository;
+use App\BusinessLogic\Core\UseCase\UserType;
+use App\BusinessLogic\Components\LoginUseCase\LoginInput\ApiLoginInput;
+use App\BusinessLogic\Components\LoginUseCase\LoginInput\UserRepositoryLoginInput;
 
-Class LoginLogic{
+class LoginLogic
+{
 
 
-    function __construct(private InputLoginLogic $inputLoginLogic){}
+    function __construct(
+        private ApiLoginInput $apiLoginInput,
+        private UserRepositoryLoginInput $userRepositoryLoginInput,
+        private UserType $userType = UserType::user
+    ) {}
+
 
     function excute()
     {
 
-        $data = new ReadRepository(FactoryModel::getFactoryModel($this->inputLoginLogic->getUserType()));
+        $user = $this->userRepositoryLoginInput->getModel();
+        CheckPassowrdLoginLogic::checkPassowrd([
+            "password" => $this->apiLoginInput->getPassword(),
+            "hashedPassword" => $this->userRepositoryLoginInput->getPassword()
+        ]);
 
-        //code for generate token -> $data['token'] = $token
+        $user['token'] = UserTokenRepository::getToken($user);
 
-        return $this->getOutputLoginByUserType($this->inputLoginLogic->getUserType()
-        ,$data->getFirstModelByValue("phoneNumber",$this->inputLoginLogic->getPhoneNumber()));
-
+        return  DetermineOutput::determineOutputLoginByUserType(
+                $this->userType,
+                $user
+            );
     }
 
-
-    private function getOutputLoginByUserType($userType,$data){
-        $outputLogin = [
-            "user" =>  new UserLoginOutput($data),
-            // "compane" =>
-            // "employee" =>
-        ];
-
-        return $outputLogin[$userType];
-    }
 
 }
-?>

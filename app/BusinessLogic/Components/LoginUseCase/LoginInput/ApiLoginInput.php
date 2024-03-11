@@ -3,11 +3,10 @@ namespace App\BusinessLogic\Components\LoginUseCase\LoginInput;
 
 use Exception;
 
-class InputLoginLogic{
+class ApiLoginInput{
 
     private String $phoneNumber;
     private String $password;
-    private String $userType;
 
   public function __construct(array $data)
   {
@@ -16,16 +15,10 @@ class InputLoginLogic{
 
     $this->setPassword($data['password']);
 
-    $this->setUserType($data['userType']);
-
-
   }
 
 
   public function setPhoneNumber($phoneNumber){
-    if($phoneNumber == 1){
-        throw new Exception("phoneNumber number must be of string type");
-    }
     $this->phoneNumber = $phoneNumber;
   }
 
@@ -33,17 +26,15 @@ class InputLoginLogic{
         $this->password = $password;
   }
 
-  public function setUserType($userType) {
-        $this->userType = $userType;
-  }
+  public function getPassword() {
+        return $this->password;
+    }
+
 
   public function getPhoneNumber() {
     return $this->phoneNumber;
   }
 
-  public function getUserType() {
-    return $this->userType;
-  }
 
   public function toArray() {
         return [

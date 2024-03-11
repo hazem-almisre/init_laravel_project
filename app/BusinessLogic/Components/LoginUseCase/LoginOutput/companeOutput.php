@@ -5,7 +5,7 @@ namespace App\BusinessLogic\Components\LoginUseCase\LoginOutput;
 use App\BusinessLogic\Components\LoginUseCase\LoginOutput\OutputLoginLogic;
 
 
-class companeOutput implements OutputLoginLogic
+class CompaneOutput implements OutputLoginLogic
 {
 
     private String $name;
@@ -16,7 +16,7 @@ class companeOutput implements OutputLoginLogic
     {
         $this->name = $data['name'];
         $this->phoneNumber = $data['phoneNumber'];
-        $this->token = $data['to$token'];
+        $this->token = $data['token'];
     }
 
     public function getOutputAsArray()

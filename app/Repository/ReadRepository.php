@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use Exception;
 use App\Models\User;
 
 class ReadRepository{
@@ -9,7 +10,10 @@ class ReadRepository{
 
 
     public function getFirstModelByValue($key,$value) {
-        return $this->model->where($key,'=',$value)->first();
+        $recored = $this->model->where($key,'=',$value)->first();
+
+        return $recored?$recored:throw new Exception("$key is not exit try agien");
+
     }
 
     public function getById($id) {

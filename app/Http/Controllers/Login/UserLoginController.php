@@ -3,9 +3,16 @@
 namespace App\Http\Controllers\Login;
 
 use Illuminate\Http\Request;
+use App\presenter\JsonResponse;
+use App\FactoryModel\FactoryModel;
+use App\Repository\ReadRepository;
+use App\BusinessLogic\Core\Constent;
 use App\Http\Controllers\Controller;
+use App\BusinessLogic\Core\UseCase\UserType;
+use App\BusinessLogic\Core\Message\ResponseMessage;
 use App\BusinessLogic\Components\LoginUseCase\LoginLogic\LoginLogic;
-use App\BusinessLogic\Components\LoginUseCase\LoginInput\InputLoginLogic;
+use App\BusinessLogic\Components\LoginUseCase\LoginInput\ApiLoginInput;
+use App\BusinessLogic\Components\LoginUseCase\LoginInput\UserRepositoryLoginInput;
 
 class UserLoginController extends Controller
 {
@@ -13,10 +20,15 @@ class UserLoginController extends Controller
     {
 
         $data = $request->all();
-        $data['userType'] = 'user';
-        $loginLogic = new LoginLogic(new InputLoginLogic($data));
 
-        return $loginLogic->excute();
+        $user = new ReadRepository(FactoryModel::getFactoryModel(UserType::user));
 
+        $loginLogic = new LoginLogic(
+            new ApiLoginInput($data),
+            new UserRepositoryLoginInput($user->getFirstModelByValue(Constent::$PHONE_NUMBER, $data['phoneNumber'])),
+            UserType::user
+        );
+
+        return JsonResponse::sendSuccess($loginLogic->excute(), ResponseMessage::$loginSuccessfull);
     }
 }

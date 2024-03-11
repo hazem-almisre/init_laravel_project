@@ -2,28 +2,34 @@
 
 namespace App\FactoryModel;
 
-use App\Models\User;
 use Exception;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Compane;
+use App\Models\Employee;
+use App\BusinessLogic\Core\UseCase\UserType;
 
 class FactoryModel
 {
 
-    static String $UESR = "user";
-
-    static public function getFactoryModel(String $key)
+    static public function getFactoryModel(UserType $userType)
     {
 
-        switch ($key) {
-            case 'user':
+        switch ($userType) {
+            case UserType::user:
                 return User::query();
                 break;
 
-            case 'compane':
-                return User::query();
+            case UserType::compane:
+                return Compane::query();
                 break;
 
-            case 'employee':
-                return User::query();
+            case UserType::employee:
+                return Employee::query();
+                break;
+
+            case UserType::admin:
+                return Admin::query();
                 break;
 
             default:
