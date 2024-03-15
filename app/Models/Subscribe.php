@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\BusinessLogic\ExternalPeocess\EntityInterfaces\SubscribeEntityInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subscribe extends Model
+class Subscribe extends Model implements SubscribeEntityInterface
 {
     use HasFactory;
 
@@ -14,6 +15,14 @@ class Subscribe extends Model
     protected $primaryKey = 'subscribeId';
 
 
+
+    public function getName() : String {
+        return $this->name;
+    }
+
+    public function setName($name) : void {
+        $this->name = $name;
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -21,17 +30,6 @@ class Subscribe extends Model
      */
     protected $fillable = [
         'name',
-        'companeId'
     ];
-
-    /**
-     * Get the compane that owns the Subscribe
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function compane()
-    {
-        return $this->belongsTo(Compane::class);
-    }
 
 }

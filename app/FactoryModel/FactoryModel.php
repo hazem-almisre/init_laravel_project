@@ -2,17 +2,19 @@
 
 namespace App\FactoryModel;
 
+use App\BusinessLogic\ExternalPeocess\EntityInterfaces\EntityInterface;
 use Exception;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Compane;
 use App\Models\Employee;
-use App\BusinessLogic\Core\UseCase\UserType;
+use App\BusinessLogic\InternalProcess\Core\UseCase\UserType;
+use App\BusinessLogic\ExternalPeocess\FactoryInterfaces\FactoryModelInterface;
 
-class FactoryModel
+class FactoryModel implements FactoryModelInterface
 {
 
-    static public function getFactoryModel(UserType $userType)
+    static public function make(UserType $userType)
     {
 
         switch ($userType) {

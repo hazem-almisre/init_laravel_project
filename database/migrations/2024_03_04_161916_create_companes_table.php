@@ -19,8 +19,10 @@ class CreateCompanesTable extends Migration
             $table->string('phoneNumber');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId("subscribeId")->references("subscribeId")
+            ->on("subscribes")->onDelete("cascade")->onUpdate("cascade");
             $table->rememberToken();
-             $table->timestamps();
+            $table->timestamps();
         });
     }
 

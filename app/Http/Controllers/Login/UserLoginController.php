@@ -6,13 +6,11 @@ use Illuminate\Http\Request;
 use App\presenter\JsonResponse;
 use App\FactoryModel\FactoryModel;
 use App\Repository\ReadRepository;
-use App\BusinessLogic\Core\Constent;
 use App\Http\Controllers\Controller;
-use App\BusinessLogic\Core\UseCase\UserType;
-use App\BusinessLogic\Core\Message\ResponseMessage;
-use App\BusinessLogic\Components\LoginUseCase\LoginLogic\LoginLogic;
-use App\BusinessLogic\Components\LoginUseCase\LoginInput\ApiLoginInput;
-use App\BusinessLogic\Components\LoginUseCase\LoginInput\UserRepositoryLoginInput;
+use App\BusinessLogic\InternalProcess\Core\UseCase\UserType;
+use App\BusinessLogic\InternalProcess\Core\Message\ResponseMessage;
+use App\BusinessLogic\InternalProcess\Components\LoginUseCase\LoginLogic\LoginLogic;
+use App\BusinessLogic\InternalProcess\Components\LoginUseCase\LoginInput\RequestLoginInput;
 
 class UserLoginController extends Controller
 {
@@ -21,11 +19,9 @@ class UserLoginController extends Controller
 
         $data = $request->all();
 
-        $user = new ReadRepository(FactoryModel::getFactoryModel(UserType::user));
-
         $loginLogic = new LoginLogic(
-            new ApiLoginInput($data),
-            new UserRepositoryLoginInput($user->getFirstModelByValue(Constent::$PHONE_NUMBER, $data['phoneNumber'])),
+            new RequestLoginInput($data),
+            new ReadRepository(FactoryModel::make(UserType::user)),
             UserType::user
         );
 

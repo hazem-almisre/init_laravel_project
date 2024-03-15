@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\BusinessLogic\ExternalPeocess\EntityInterfaces\CompaneEntityInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 
-class Compane extends Authenticatable
+class Compane extends Authenticatable implements CompaneEntityInterface
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -16,6 +18,33 @@ class Compane extends Authenticatable
 
     protected $primaryKey = 'companeId';
 
+    public function getName() : String {
+        return $this->name;
+    }
+
+    public function setName($name) : void {
+        $this->name = $name;
+    }
+
+    public function getphoneNubmer() : String{
+        return $this->phoneNumber;
+    }
+
+    public function setphoneNubmer($phoneNumber) : void{
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    public function getPassword() : String{
+        return $this->password;
+    }
+
+    public function setPassword($password) : void{
+        $this->password = Hash::make($password);
+    }
+
+    public function getSubscribeId() : int{
+        return $this->subscribeId;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +55,7 @@ class Compane extends Authenticatable
         'name',
         'phoneNumber',
         'password',
+        "subscribeId"
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -46,14 +76,15 @@ class Compane extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     /**
-     * Get the subscribe associated with the Compane
+     * Get the subscribe that owns the Compane
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function subscribe()
     {
-        return $this->hasOne(Subscribe::class);
+        return $this->belongsTo(Subscribe::class);
     }
 
     /**

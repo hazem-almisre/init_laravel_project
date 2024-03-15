@@ -40,6 +40,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'user' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+
+        'compane' => [
+            'driver' => 'passport',
+            'provider' => 'companes',
+        ],
+
+        'admin' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
+
+        'employee' => [
+            'driver' => 'passport',
+            'provider' => 'employees',
+        ],
     ],
 
     /*
@@ -63,6 +83,21 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'companes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Compane::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
         ],
 
         // 'users' => [
@@ -89,6 +124,27 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'companes' => [
+            'provider' => 'companes',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'employees' => [
+            'provider' => 'employees',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\BusinessLogic\ExternalPeocess\EntityInterfaces\AdminEntityInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements AdminEntityInterface
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,6 +19,29 @@ class Admin extends Authenticatable
     protected $primaryKey = 'adminId';
 
 
+    public function getName() : String {
+        return $this->name;
+    }
+
+    public function setName($name) : void {
+        $this->name = $name;
+    }
+
+    public function getphoneNubmer() : String{
+        return $this->phoneNumber;
+    }
+
+    public function setphoneNubmer($phoneNumber) : void{
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    public function getPassword() : String{
+        return $this->password;
+    }
+
+    public function setPassword($password) : void{
+        $this->password = Hash::make($password);
+    }
     /**
      * The attributes that are mass assignable.
      *

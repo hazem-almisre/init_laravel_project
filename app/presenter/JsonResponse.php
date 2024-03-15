@@ -11,8 +11,8 @@ class JsonResponse implements Presenter
         return response()->json(
             [
                 "state" => 1,
+                "message" => $message,
                 "data" => $data,
-                "message" => $message
             ]
         );
     }
@@ -22,8 +22,8 @@ class JsonResponse implements Presenter
 
         return response()->json([
             'state' => 0,
+            "message" => $message,
             "errors" => $data,
-            "message" => $message
         ]);
     }
 }

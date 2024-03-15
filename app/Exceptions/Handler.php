@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\presenter\JsonResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -41,6 +42,6 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $th)
     {
-        return response()->json(['message'=>$th->getMessage(),'data'=>$th->getTrace()]);
+        return JsonResponse::sendFailed($th->getTrace(),$th->getMessage());
     }
 }
