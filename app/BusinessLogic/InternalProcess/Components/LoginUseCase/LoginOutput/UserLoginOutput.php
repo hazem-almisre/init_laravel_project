@@ -9,6 +9,7 @@ use App\BusinessLogic\InternalProcess\Components\LoginUseCase\interfaces\LoginOu
 class UserLoginOutput implements LoginOutputInterface
 {
 
+    private String $userId;
     private String $firstName;
     private String $lastName;
     private String $phoneNumber;
@@ -19,6 +20,7 @@ class UserLoginOutput implements LoginOutputInterface
 
     public function __construct($data)
     {
+        $this->userId = $data['userId'];
         $this->firstName = $data['firstName'];
         $this->lastName = $data['lastName'];
         $this->phoneNumber = $data['phoneNumber'];
@@ -31,6 +33,7 @@ class UserLoginOutput implements LoginOutputInterface
     public function getOutputAsArray() : array
     {
         return [
+            "userId" => $this->userId,
             "firstName" => $this->firstName,
             "lastName" => $this->lastName,
             "phoneNumber" => $this->phoneNumber,

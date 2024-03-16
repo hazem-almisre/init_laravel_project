@@ -9,11 +9,13 @@ class CompaneRegisterInput implements RegisterInputInterface{
     public String $name;
     public String $phoneNumber;
     public String $password;
+    public String $subscribeId;
 
     function __construct(array $data)
     {
         $this->name = $data['name'];
         $this->phoneNumber = $data['phoneNumber'];
+        $this->subscribeId = $data['subscribeId'];
         $this->setPassword($data['password']);
     }
 
@@ -26,7 +28,8 @@ class CompaneRegisterInput implements RegisterInputInterface{
         return [
             "name" => $this->name,
             "phoneNumber" => $this->phoneNumber,
-            "password" => $this->password
+            "password" => $this->password,
+            "subscribeId" => $this->subscribeId
         ];
     }
 

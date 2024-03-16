@@ -23,7 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->string('password');
             $table->date('birthDay');
             $table->text('Image')->nullable();
-            $table->foreignId('companeId')->references('companeId')->on('companes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('companeId')->references('companeId')->on('companes')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

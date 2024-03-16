@@ -20,7 +20,7 @@ class CreateCompanesTable extends Migration
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId("subscribeId")->references("subscribeId")
-            ->on("subscribes")->onDelete("cascade")->onUpdate("cascade");
+            ->on("subscribes")->onDelete("cascade");
             $table->rememberToken();
             $table->timestamps();
         });
